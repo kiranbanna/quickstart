@@ -73,7 +73,7 @@ sqlserver=${2}
 echo "Grabbed the IP address ($sqlserver) of the SQL Server."
 
 # ip addresses of other servers 
-servers=( "${1[@]}" )
+servers=( "${3[@]}" )
 
 # Try to install OpenCart via command line.
 i2=0
