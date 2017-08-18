@@ -51,7 +51,7 @@ echo "Wait for the SQL server to come alive!"
 i=0
 while [ $i == 0 ]
 do
-sshpass -p${6} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${5}@$1 "mysql -u opencart -p${6} -Bse 'select 1;'"
+sshpass -p${5} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${4}@$1 "mysql -u opencart -p${5} -Bse 'select 1;'"
 status=$?
 if [ $status == 0 ]
 then
@@ -68,7 +68,7 @@ echo "Grabbed the IP address ($sqlserver) of the SQL Server."
 
 # Try to install OpenCart via command line.
 i2=0
-php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password $6 --db_database "opencart" --db_driver mysqli --username admin --password $6 --email "${5}@f5.com" --http_server "http://${2}.westus.cloudapp.azure.com/"  || i2=$[$i2+1]
+php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password $5 --db_database "opencart" --db_driver mysqli --username admin --password $5 --email "${4}@f5.com" --http_server "http://${2}.westus.cloudapp.azure.com/"  || i2=$[$i2+1]
 
 if [ $i2 == 1 ]
 then
@@ -98,15 +98,15 @@ else
 	     i=0
 		 while [ $i == 0 ]
 		 do
-		 sshpass -p${6} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${5}@$newname "cat /var/www/html/opencart/config.php"
+		 sshpass -p${5} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${4}@$newname "cat /var/www/html/opencart/config.php"
 		 status=$?
 		 if [ $status == 0 ]
 		 then
 		    echo "Sending our configuraiton files to server $newname."
-            sshpass -p${6} scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no /var/www/html/opencart/config.php $5@$newname:/var/www/html/opencart/config.php
-		    sshpass -p${6} scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no /var/www/html/opencart/admin/config.php $5@$newname:/var/www/html/opencart/admin/config.php
-		    sshpass -p${6} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $5@$newname "sudo service apache2 restart"
-		    sshpass -p${6} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $5@$newname "logger 'This Apache Web Server is now ready to host OpenCart...'"
+            sshpass -p${5} scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no /var/www/html/opencart/config.php $4@$newname:/var/www/html/opencart/config.php
+		    sshpass -p${5} scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no /var/www/html/opencart/admin/config.php $4@$newname:/var/www/html/opencart/admin/config.php
+		    sshpass -p${5} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $4@$newname "sudo service apache2 restart"
+		    sshpass -p${5} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $4@$newname "logger 'This Apache Web Server is now ready to host OpenCart...'"
 		    i=$[$i+1]
 		 else
 		    echo "Sleeping for 10 seconds while we wait for ${newname} to come online."
