@@ -69,7 +69,6 @@ selfid=${2}
 #sqlserver=$(nslookup $1 | awk '/^Address: / { print $2 }')
 # server ip
 sqlserver=${1}
-
 echo "Grabbed the IP address ($sqlserver) of the SQL Server."
 
 # ip addresses of other servers 
