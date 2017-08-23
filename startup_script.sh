@@ -64,11 +64,11 @@ done
 echo "SQL server is now alive."
 
 # self ip 
-selfid=${1}
+selfid=${2}
 
 #sqlserver=$(nslookup $1 | awk '/^Address: / { print $2 }')
 # server ip
-sqlserver=${2}
+sqlserver=${1}
 
 echo "Grabbed the IP address ($sqlserver) of the SQL Server."
 
@@ -91,42 +91,42 @@ then
    echo "Deleted opencart install directory."
    echo "Finished, waiting for our opencart configuration to be updated by the successful server."
 else
-   # We succeded because we were the first!
-   # Everyone else will fail, so we need to push our config to the others and restart their apache2 server.
+   ## We succeded because we were the first!
+   ## Everyone else will fail, so we need to push our config to the others and restart their apache2 server.
    sleep 20
-   #number=$3
-   #newnumber=$(( number - 1 ))
-   #nameprefix=$4
-   host=$( selfid )
-   for s in "${servers[@]}"
-   do
-   #for t in $( seq 0 $newnumber); do      
-      #newname=${nameprefix}${t}
-      if [ $s == $host ]
-      then
-         echo "This is me!"
-      else
-	     i=0
-		 while [ $i == 0 ]
-		 do
-		 sshpass -p${5} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${4}@$s "cat /var/www/html/opencart/config.php"
-		 status=$?
-		 if [ $status == 0 ]
-		 then
-		    echo "Sending our configuraiton files to server $s."
-            sshpass -p${5} scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no /var/www/html/opencart/config.php $4@$s:/var/www/html/opencart/config.php
-		    sshpass -p${5} scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no /var/www/html/opencart/admin/config.php $4@$s:/var/www/html/opencart/admin/config.php
-		    sshpass -p${5} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $4@$s "sudo service apache2 restart"
-		    sshpass -p${5} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $4@$s "logger 'This Apache Web Server is now ready to host OpenCart...'"
-		    i=$[$i+1]
-		 else
-		    echo "Sleeping for 10 seconds while we wait for ${newname} to come online."
-		    sleep 10
-		 fi
-		 echo "Finished sending our config to $newname."
-		 done	     
-      fi	  
-   done
+   ##number=$3
+   ##newnumber=$(( number - 1 ))
+   ##nameprefix=$4
+   #host=$selfid
+   #for s in "${servers[@]}"
+   #do
+   ##for t in $( seq 0 $newnumber); do      
+      ##newname=${nameprefix}${t}
+      #if [ $s == $host ]
+      #then
+         #echo "This is me!"
+      #else
+	     #i=0
+		 #while [ $i == 0 ]
+		 #do
+		 #sshpass -p${5} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${4}@$s "cat /var/www/html/opencart/config.php"
+		 #status=$?
+		 #if [ $status == 0 ]
+		 #then
+		    #echo "Sending our configuraiton files to server $s."
+            #sshpass -p${5} scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no /var/www/html/opencart/config.php $4@$s:/var/www/html/opencart/config.php
+		    #sshpass -p${5} scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no /var/www/html/opencart/admin/config.php $4@$s:/var/www/html/opencart/admin/config.php
+		    #sshpass -p${5} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $4@$s "sudo service apache2 restart"
+		    #sshpass -p${5} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $4@$s "logger 'This Apache Web Server is now ready to host OpenCart...'"
+		    #i=$[$i+1]
+		 #else
+		    #echo "Sleeping for 10 seconds while we wait for ${newname} to come online."
+		    #sleep 10
+		 #fi
+		 #echo "Finished sending our config to $newname."
+		 #done	     
+      #fi	  
+   #done
    sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
    echo "Edited the apache files."
    chmod 777 -R /var/www/html/opencart
