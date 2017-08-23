@@ -51,7 +51,7 @@ echo "Wait for the SQL server to come alive!"
 i=0
 while [ $i == 0 ]
 do
-sshpass -p${5} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${4}@$1 "mysql -u opencart -p${5} -Bse 'select 1;'"
+sshpass -p${4} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${3}@$2 "mysql -u opencart -p${4} -Bse 'select 1;'"
 status=$?
 if [ $status == 0 ]
 then
@@ -64,75 +64,22 @@ done
 echo "SQL server is now alive."
 
 # self ip 
-selfid=${2}
+selfid=${1}
 
-#sqlserver=$(nslookup $1 | awk '/^Address: / { print $2 }')
 # server ip
-sqlserver=${1}
+sqlserver=${2}
 echo "Grabbed the IP address ($sqlserver) of the SQL Server."
-
-# ip addresses of other servers 
-servers=( "${3[@]}" )
 
 # Try to install OpenCart via command line.
 i2=0
 php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password $5 --db_database "opencart" --db_driver mysqli --username admin --password $5 --email "${4}@f5.com" --http_server "http://test.f5.quickstart.aws.com/"  || i2=$[$i2+1]
-
-if [ $i2 == 1 ]
-then
-   # We failed to install because anothe webserver beat us to it.
-   # So we will finish what we have to do, and wait to recieve the config files and have our apache2 restarted.
-   sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
-   echo "Edited the apache files."
-   chmod 777 -R /var/www/html/opencart
-   echo "chmod opencart directory."
-   rm -dfr /var/www/html/opencart/install
-   echo "Deleted opencart install directory."
-   echo "Finished, waiting for our opencart configuration to be updated by the successful server."
-else
-   ## We succeded because we were the first!
-   ## Everyone else will fail, so we need to push our config to the others and restart their apache2 server.
-   sleep 20
-   ##number=$3
-   ##newnumber=$(( number - 1 ))
-   ##nameprefix=$4
-   #host=$selfid
-   #for s in "${servers[@]}"
-   #do
-   ##for t in $( seq 0 $newnumber); do      
-      ##newname=${nameprefix}${t}
-      #if [ $s == $host ]
-      #then
-         #echo "This is me!"
-      #else
-	     #i=0
-		 #while [ $i == 0 ]
-		 #do
-		 #sshpass -p${5} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${4}@$s "cat /var/www/html/opencart/config.php"
-		 #status=$?
-		 #if [ $status == 0 ]
-		 #then
-		    #echo "Sending our configuraiton files to server $s."
-            #sshpass -p${5} scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no /var/www/html/opencart/config.php $4@$s:/var/www/html/opencart/config.php
-		    #sshpass -p${5} scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no /var/www/html/opencart/admin/config.php $4@$s:/var/www/html/opencart/admin/config.php
-		    #sshpass -p${5} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $4@$s "sudo service apache2 restart"
-		    #sshpass -p${5} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $4@$s "logger 'This Apache Web Server is now ready to host OpenCart...'"
-		    #i=$[$i+1]
-		 #else
-		    #echo "Sleeping for 10 seconds while we wait for ${newname} to come online."
-		    #sleep 10
-		 #fi
-		 #echo "Finished sending our config to $newname."
-		 #done	     
-      #fi	  
-   #done
-   sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
-   echo "Edited the apache files."
-   chmod 777 -R /var/www/html/opencart
-   echo "chmod opencart directory."
-   rm -dfr /var/www/html/opencart/install
-   echo "Deleted opencart install directory."
-   service apache2 restart
-   echo "Restarted Apache."
-   echo "This Apache Web Server is now hosting OpenCart..."
-fi
+sleep 20
+sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
+echo "Edited the apache files."
+chmod 777 -R /var/www/html/opencart
+echo "chmod opencart directory."
+rm -dfr /var/www/html/opencart/install
+echo "Deleted opencart install directory."
+service apache2 restart
+echo "Restarted Apache."
+echo "This Apache Web Server is now hosting OpenCart..."
