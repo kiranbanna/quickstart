@@ -23,35 +23,35 @@
 ## 11/23/15#  Thomas Stanley#    Created base functionality              ##
 ###########################################################################
 
-apt-get update
+sudo apt-get update
 
-apt-get -y install build-essential libssl-dev binutils binutils-dev openssl
-apt-get -y install libdb-dev libexpat1-dev automake checkinstall unzip elinks sshpass
+sudo apt-get -y install build-essential libssl-dev binutils binutils-dev openssl
+sudo apt-get -y install libdb-dev libexpat1-dev automake checkinstall unzip elinks sshpass
 
-apt-get -y install apache2 libapache2-mod-perl2
-apt-get -y install libcrypt-ssleay-perl libwww-perl libhtml-parser-perl libwww-mechanize-perl
-apt-get -y install php5
-a2enmod ssl
-a2ensite default-ssl
-apt-get -y install php5-mcrypt
-php5enmod mcrypt
-apt-get -y install php5-gd
-apt-get -y install php5-curl
-apt-get -y install php5-mysql
-service apache2 restart
+sudo apt-get -y install apache2 libapache2-mod-perl2
+sudo apt-get -y install libcrypt-ssleay-perl libwww-perl libhtml-parser-perl libwww-mechanize-perl
+sudo apt-get -y install php5
+sudo a2enmod ssl
+sudo a2ensite default-ssl
+sudo apt-get -y install php5-mcrypt
+sudo php5enmod mcrypt
+sudo apt-get -y install php5-gd
+sudo apt-get -y install php5-curl
+sudo apt-get -y install php5-mysql
+sudo service apache2 restart
 
-unzip ./opencart-2.0.1.1.zip
-echo "Finished inflating zip file."
-mv opencart-2.0.1.1/upload /var/www/html/opencart
-mv /var/www/html/opencart/config-dist.php /var/www/html/opencart/config.php
-mv /var/www/html/opencart/admin/config-dist.php /var/www/html/opencart/admin/config.php
-echo "Moved config files."
+sudo unzip ./opencart-2.0.1.1.zip
+sudo echo "Finished inflating zip file."
+sudo mv opencart-2.0.1.1/upload /var/www/html/opencart
+sudo mv /var/www/html/opencart/config-dist.php /var/www/html/opencart/config.php
+sudo mv /var/www/html/opencart/admin/config-dist.php /var/www/html/opencart/admin/config.php
+sudo echo "Moved config files."
 
-echo "Wait for the SQL server to come alive!"
+sudo echo "Wait for the SQL server to come alive!"
 i=0
 while [ $i == 0 ]
 do
-sshpass -p${4} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${3}@$2 "mysql -u opencart -p${4} -Bse 'select 1;'"
+sudo sshpass -p${4} ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${3}@$2 "mysql -u opencart -p${4} -Bse 'select 1;'"
 status=$?
 if [ $status == 0 ]
 then
@@ -72,14 +72,14 @@ echo "Grabbed the IP address ($sqlserver) of the SQL Server."
 
 # Try to install OpenCart via command line.
 i2=0
-php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password $5 --db_database "opencart" --db_driver mysqli --username admin --password $5 --email "${4}@f5.com" --http_server "http://test.f5.quickstart.aws.com/"  || i2=$[$i2+1]
+sudo php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password $5 --db_database "opencart" --db_driver mysqli --username admin --password $5 --email "${4}@f5.com" --http_server "http://test.f5.quickstart.aws.com/"  || i2=$[$i2+1]
 sleep 20
-sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
+sudo sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
 echo "Edited the apache files."
 chmod 777 -R /var/www/html/opencart
 echo "chmod opencart directory."
 rm -dfr /var/www/html/opencart/install
 echo "Deleted opencart install directory."
-service apache2 restart
+sudo service apache2 restart
 echo "Restarted Apache."
 echo "This Apache Web Server is now hosting OpenCart..."
