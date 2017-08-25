@@ -42,7 +42,8 @@ service apache2 restart
 
 unzip ./opencart-2.0.1.1.zip
 echo "Finished inflating zip file."
-mv opencart-2.0.1.1/upload /var/www/html/opencart
+mkdir /var/www/html/opencart
+mv opencart-2.0.1.1/upload/* /var/www/html/opencart/.
 mv /var/www/html/opencart/config-dist.php /var/www/html/opencart/config.php
 mv /var/www/html/opencart/admin/config-dist.php /var/www/html/opencart/admin/config.php
 echo "Moved config files."
