@@ -42,8 +42,11 @@ service apache2 restart
 
 unzip ./opencart-2.0.1.1.zip
 echo "Finished inflating zip file."
-cd /var/www/html
-mkdir opencart
+
+chmod 777 -R /var/www/html
+mkdir /var/www/html/opencart
+chmod 777 -R /var/www/html/opencart
+
 mv opencart-2.0.1.1/upload/* /var/www/html/opencart/.
 mv /var/www/html/opencart/config-dist.php /var/www/html/opencart/config.php
 mv /var/www/html/opencart/admin/config-dist.php /var/www/html/opencart/admin/config.php
@@ -74,14 +77,14 @@ echo "Grabbed the IP address ($sqlserver) of the SQL Server."
 
 # Try to install OpenCart via command line.
 i2=0
-sudo php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password $5 --db_database "opencart" --db_driver mysqli --username admin --password $5 --email "${4}@f5.com" --http_server "http://test.f5.quickstart.aws.com/"  || i2=$[$i2+1]
+php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password $5 --db_database "opencart" --db_driver mysqli --username admin --password $4 --email "${3}@f5.com" --http_server "http://test.f5.quickstart.aws.com/"  || i2=$[$i2+1]
 sleep 20
-sudo sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
+sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
 echo "Edited the apache files."
 chmod 777 -R /var/www/html/opencart
 echo "chmod opencart directory."
 rm -dfr /var/www/html/opencart/install
 echo "Deleted opencart install directory."
-sudo service apache2 restart
+service apache2 restart
 echo "Restarted Apache."
 echo "This Apache Web Server is now hosting OpenCart..."
