@@ -77,14 +77,14 @@ echo "Grabbed the IP address ($sqlserver) of the SQL Server."
 
 # Try to install OpenCart via command line.
 i2=0
-php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password $4 --db_database "opencart" --db_driver mysqli --username admin --password $4 --email "${3}@f5.com" --http_server "http://test.f5.quickstart.aws.com/"  || i2=$[$i2+1]
+php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password $4 --db_database "opencart" --db_driver mysqli --username admin --password $4 --email "${3}@f5.com" --http_server "http://localhost/opencart" || i2=$[$i2+1]
 sleep 20
 sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
 echo "Edited the apache files."
 chmod 777 -R /var/www/html/opencart
 echo "chmod opencart directory."
-rm -dfr /var/www/html/opencart/install
-echo "Deleted opencart install directory."
+#rm -dfr /var/www/html/opencart/install
+#echo "Deleted opencart install directory."
 service apache2 restart
 echo "Restarted Apache."
 echo "This Apache Web Server is now hosting OpenCart..."
