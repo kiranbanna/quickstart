@@ -83,8 +83,8 @@ sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.con
 echo "Edited the apache files."
 chmod 777 -R /var/www/html/opencart
 echo "chmod opencart directory."
-#rm -dfr /var/www/html/opencart/install
-#echo "Deleted opencart install directory."
+rm -dfr /var/www/html/opencart/install
+echo "Deleted opencart install directory."
 service apache2 restart
 echo "Restarted Apache."
 echo "This Apache Web Server is now hosting OpenCart..."
