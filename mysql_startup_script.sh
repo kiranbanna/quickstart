@@ -24,7 +24,7 @@
 ###########################################################################
 
 apt-get update
-# test
+
 apt-get -y install build-essential libssl-dev binutils binutils-dev openssl
 apt-get -y install libdb-dev libexpat1-dev automake checkinstall unzip elinks
 
