@@ -38,6 +38,11 @@ php5enmod mcrypt
 apt-get -y install php5-gd
 apt-get -y install php5-curl
 apt-get -y install php5-mysql
+apt-get -y install mysql-client-core-5.5
+apt-get -y install mariadb-client-core-5.5
+apt-get -y install mysql-client-core-5.6
+apt-get -y install percona-xtradb-cluster-client-5.5
+apt-get -y install mysql-client-core-5.6
 service apache2 restart
 
 unzip ./opencart-2.0.1.1.zip
