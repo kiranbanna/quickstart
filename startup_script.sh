@@ -40,7 +40,7 @@ sudo apt-get -y install php5-curl
 sudo apt-get -y install php5-mysql
 sudo service apache2 restart
 
-sudo unzip ./opencart-3.0.2.0.zip
+sudo unzip ./opencart-3.0.2.0.zip -d opencart-3.0.2.0
 echo "Finished inflating zip file."
 
 sudo chmod 777 -R /var/www/html
