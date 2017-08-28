@@ -40,14 +40,14 @@ sudo apt-get -y install php5-curl
 sudo apt-get -y install php5-mysql
 sudo service apache2 restart
 
-sudo unzip ./opencart-2.0.1.1.zip
+sudo unzip ./opencart-3.0.2.0.zip
 echo "Finished inflating zip file."
 
 sudo chmod 777 -R /var/www/html
 sudo mkdir /var/www/html/opencart
 sudo chmod 777 -R /var/www/html/opencart
 
-sudo mv opencart-2.0.1.1/upload/* /var/www/html/opencart/.
+sudo mv opencart-3.0.2.0/upload/* /var/www/html/opencart/.
 sudo mv /var/www/html/opencart/config-dist.php /var/www/html/opencart/config.php
 sudo mv /var/www/html/opencart/admin/config-dist.php /var/www/html/opencart/admin/config.php
 sudo echo "Moved config files."
