@@ -74,10 +74,10 @@ selfid=${1}
 # server ip
 sqlserver=${2}
 echo "Grabbed the IP address ($sqlserver) of the SQL Server."
-sleep 30
+//sleep 30
 # Try to install OpenCart via command line.
 i2=0
-sudo php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password "anna" --db_database "opencart" --db_driver mysqli --username "root" --password "anna" --email "anna@f5.com" --http_server "http://localhost/opencart/" || i2=$[$i2+1]
+//sudo php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password "anna" --db_database "opencart" --db_driver mysqli --username "root" --password "anna" --email "anna@f5.com" --http_server "http://localhost/opencart/" || i2=$[$i2+1]
 sleep 30
 
 //sudo sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
