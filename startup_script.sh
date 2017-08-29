@@ -31,25 +31,30 @@ sudo apt-get -y install libdb-dev libexpat1-dev automake checkinstall unzip elin
 sudo apt-get -y install apache2 libapache2-mod-perl2
 sudo apt-get -y install libcrypt-ssleay-perl libwww-perl libhtml-parser-perl libwww-mechanize-perl
 sudo apt-get -y install php5
+sudo apt-get -y install lamp-server
+
 sudo a2enmod ssl
 sudo a2ensite default-ssl
+
 sudo apt-get -y install php5-mcrypt
 sudo php5enmod mcrypt
 sudo apt-get -y install php5-gd
 sudo apt-get -y install php5-curl
 sudo apt-get -y install php5-mysql
-sudo service apache2 restart
+//sudo service apache2 restart
 
 sudo unzip ./opencart-3.0.2.0.zip -d opencart-3.0.2.0
 echo "Finished inflating zip file."
 
 sudo chmod 777 -R /var/www/html
-sudo mkdir /var/www/html/opencart
-sudo chmod 777 -R /var/www/html/opencart
+//sudo mkdir /var/www/html/opencart
+//sudo chmod 777 -R /var/www/html/opencart
 
-sudo mv opencart-3.0.2.0/upload/* /var/www/html/opencart/.
-sudo mv /var/www/html/opencart/config-dist.php /var/www/html/opencart/config.php
-sudo mv /var/www/html/opencart/admin/config-dist.php /var/www/html/opencart/admin/config.php
+sudo mv opencart-3.0.2.0/upload/* /var/www/html/.
+sudo cd /var/www/html
+sudo mv config-dist.php config.php
+sudo mv admin/config-dist.php admin/config.php
+chown -R www-data:www-data /var/www/html
 sudo echo "Moved config files."
 
 echo "Wait for the SQL server to come alive!"
@@ -82,7 +87,7 @@ sleep 30
 
 //sudo sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
 //echo "Edited the apache files."
-sudo chmod 777 -R /var/www/html/opencart
+//sudo chmod 777 -R /var/www/html/opencart
 //echo "chmod opencart directory."
 //rm -dfr /var/www/html/opencart/install
 //echo "Deleted opencart install directory."
