@@ -43,7 +43,7 @@ echo "Grabbed the IP address ($sqlserver) of the SQL Server."
 
 # Try to install OpenCart via command line.
 i2=0
-sudo php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password 'anna' --db_database "opencart" --db_driver mysqli --username 'root' --password 'anna' --email "anna@f5.com" --http_server "http://f5.aws.quickstart.com/"  || i2=$[$i2+1]
+sudo php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password 'anna' --db_database "opencart" --db_driver mysqli --username 'root' --password 'anna' --email "anna@f5.com" --http_server "http://f5.aws.quickstart.com/opencart/"  || i2=$[$i2+1]
 
 if [ $i2 == 1 ]
 then
