@@ -33,24 +33,9 @@ sudo mv /var/www/html/opencart/config-dist.php /var/www/html/opencart/config.php
 sudo mv /var/www/html/opencart/admin/config-dist.php /var/www/html/opencart/admin/config.php
 sudo echo "Moved config files."
 
-#echo "Wait for the SQL server to come alive!"
-#i=0
-#while [ $i == 0 ]
-#do
-#sshpass -panna ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no anna@$2 "mysql -uopencart -panna -Bse 'select 1;'"
-#status=$?
-#if [ $status == 0 ]
-#then
-#   i=$[$i+1]
-#else
-#   echo "Sleeping for 10 seconds while we wait for the MySQL server to come online."
-#   sleep 10
-#fi
-#done
 echo "SQL server is now alive."
 
 selfip=$1
-
 sqlserver=$2
 echo "Grabbed the IP address ($sqlserver) of the SQL Server."
 
@@ -61,6 +46,7 @@ sudo php /var/www/html/opencart/install/cli_install.php install --db_hostname $s
 if [ $i2 == 1 ]
 then
    echo "We failed to install because anothe webserver beat us to it."
+   sleep 30
    # So we will finish what we have to do, and wait to recieve the config files and have our apache2 restarted.
    sudo sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
    echo "Edited the apache files."
