@@ -4,6 +4,7 @@ sudo apt-get update
 
 sudo apt-get -y install build-essential libssl-dev binutils binutils-dev openssl
 sudo apt-get -y install libdb-dev libexpat1-dev automake checkinstall unzip elinks sshpass
+sudo apt-get -y install curl wget lynx w3m
 
 sudo apt-get -y install apache2 libapache2-mod-perl2
 sudo apt-get -y install libcrypt-ssleay-perl libwww-perl libhtml-parser-perl libwww-mechanize-perl
@@ -53,8 +54,9 @@ sudo php /var/www/html/opencart/install/cli_install.php install --db_hostname $s
 # Everyone else will fail, so we need to push our config to the others and restart their apache2 server.
 sleep 10
 sudo sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
-#sudo rm -dfr /var/www/html/opencart/install
-sleep 10
+sleep 60
 sudo service apache2 restart
-sleep 20
+curl http://f5.aws.quickstart.com/
+sleep 30
+sudo rm -dfr /var/www/html/opencart/install
 echo "Restarted Apache."
