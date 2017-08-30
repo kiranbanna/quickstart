@@ -56,5 +56,5 @@ sudo sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-defaul
 #sudo rm -dfr /var/www/html/opencart/install
 sleep 10
 sudo service apache2 restart
-sleep 10
+sleep 20
 echo "Restarted Apache."
