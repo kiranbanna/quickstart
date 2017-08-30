@@ -1,5 +1,5 @@
 #!/bin/bash
-
+sleep 90
 sudo apt-get update
 
 sudo apt-get -y install build-essential libssl-dev binutils binutils-dev openssl
