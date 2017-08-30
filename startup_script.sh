@@ -38,7 +38,7 @@ sudo mv /var/www/html/opencart/config-dist.php /var/www/html/opencart/config.php
 sudo mv /var/www/html/opencart/admin/config-dist.php /var/www/html/opencart/admin/config.php
 sudo echo "Moved config files."
 
-sleep 30
+#sleep 30
 echo "SQL server is now alive."
 
 selfip=$1
@@ -51,10 +51,10 @@ sudo php /var/www/html/opencart/install/cli_install.php install --db_hostname $s
 
 # We succeded because we were the first!
 # Everyone else will fail, so we need to push our config to the others and restart their apache2 server.
-sleep 30
+sleep 10
 sudo sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
 #sudo rm -dfr /var/www/html/opencart/install
-sleep 30
+sleep 10
 sudo service apache2 restart
-sleep 30
+sleep 10
 echo "Restarted Apache."
