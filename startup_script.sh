@@ -45,29 +45,16 @@ echo "Grabbed the IP address ($sqlserver) of the SQL Server."
 i2=0
 sudo php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password 'anna' --db_database "opencart" --db_driver mysqli --username 'root' --password 'anna' --email "anna@f5.com" --http_server "http://f5.aws.quickstart.com/opencart/"  || i2=$[$i2+1]
 
-if [ $i2 == 1 ]
-then
-   echo "We failed to install because anothe webserver beat us to it."
-   sleep 30
-   # So we will finish what we have to do, and wait to recieve the config files and have our apache2 restarted.
-   sudo sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
-   echo "Edited the apache files."
-   sudo chmod 777 -R /var/www/html/opencart
-   echo "chmod opencart directory."
-   #sudo rm -dfr /var/www/html/opencart/install
-   echo "Deleted opencart install directory."
-   echo "Finished, waiting for our opencart configuration to be updated by the successful server."
-else
-   # We succeded because we were the first!
-   # Everyone else will fail, so we need to push our config to the others and restart their apache2 server.
-   sleep 30
-   sudo sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
-   echo "Edited the apache files."
-   sudo chmod 777 -R /var/www/html/opencart
-   echo "chmod opencart directory."
-   #sudo rm -dfr /var/www/html/opencart/install
-   echo "Deleted opencart install directory."
-   sudo service apache2 restart
-   echo "Restarted Apache."
-   echo "This Apache Web Server is now hosting OpenCart..."
-fi
+# We succeded because we were the first!
+# Everyone else will fail, so we need to push our config to the others and restart their apache2 server.
+sleep 30
+sudo sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
+echo "Edited the apache files."
+sudo chmod 777 -R /var/www/html/opencart
+echo "chmod opencart directory."
+#sudo rm -dfr /var/www/html/opencart/install
+echo "Deleted opencart install directory."
+sudo service apache2 restart
+echo "Restarted Apache."
+echo "This Apache Web Server is now hosting OpenCart..."
+
