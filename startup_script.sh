@@ -17,8 +17,6 @@ sudo apt-get -y install php5-gd
 sudo apt-get -y install php5-curl
 sudo apt-get -y install php5-mysql
 sudo apt-get -y install php5-mcrypt
-sudo apt-get -y install php5-mysqli
-
 
 sudo php5enmod mcrypt
 sudo service apache2 restart
