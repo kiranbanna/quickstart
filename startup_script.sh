@@ -51,8 +51,10 @@ sudo php /var/www/html/opencart/install/cli_install.php install --db_hostname $s
 
 # We succeded because we were the first!
 # Everyone else will fail, so we need to push our config to the others and restart their apache2 server.
-sleep 30
+sleep 15
 sudo sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
 #sudo rm -dfr /var/www/html/opencart/install
+sleep 15
 sudo service apache2 restart
+sleep 15
 echo "Restarted Apache."
