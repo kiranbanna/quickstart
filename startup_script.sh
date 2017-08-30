@@ -1,5 +1,4 @@
 #!/bin/bash
-sleep 90
 sudo apt-get update
 
 sudo apt-get -y install build-essential libssl-dev binutils binutils-dev openssl
@@ -59,5 +58,5 @@ sudo service apache2 restart
 sleep 60
 curl http://f5.aws.quickstart.com/
 sleep 30
-sudo rm -dfr /var/www/html/opencart/install
+#sudo rm -dfr /var/www/html/opencart/install
 echo "Restarted Apache."
