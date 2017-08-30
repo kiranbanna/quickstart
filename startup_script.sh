@@ -18,6 +18,11 @@ sudo apt-get -y install php5-curl
 sudo apt-get -y install php5-mysql
 sudo apt-get -y install php5-mcrypt
 
+sudo apt-get -y install mysql-client-core-5.5
+sudo apt-get -y install mariadb-client-core-5.5
+sudo apt-get -y install mysql-client-core-5.6
+sudo apt-get -y install percona-xtradb-cluster-client-5.5
+
 sudo php5enmod mcrypt
 sudo service apache2 restart
 
