@@ -61,6 +61,6 @@ do
    sleep 5
    sudo opencartup=$(curl http://localhost/ | grep "opencart" | wc -c)
 done
-sudo cat $opencartup > /home/ubuntu/temp.txt
+echo $opencartup > /home/ubuntu/temp.txt
 sudo rm -dfr /var/www/html/opencart/install
 echo "Restarted Apache."
