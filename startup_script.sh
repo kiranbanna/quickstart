@@ -55,11 +55,10 @@ sleep 10
 sudo sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
 sudo service apache2 restart
 opencartup = 0
-while [ $opencart == 0 ]
+while [ $opencartup == 0 ]
 do
-   sudo curl http://localhost/ | grep "opencart" | wc -c > temp.txt
-   sudo opencartup=$(cat temp.txt)
    sleep 5
+   sudo opencartup=$(curl http://localhost/ | grep "opencart" | wc -c)
 done
 sudo rm -dfr /var/www/html/opencart/install
 echo "Restarted Apache."
