@@ -56,7 +56,7 @@ sudo sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-defaul
 sudo service apache2 restart
 
 opencartup=0
-while [ $opencartup == 0 ]
+while [ $opencartup eq 0 ]
 do
    sleep 5
    sudo opencartup=$(curl http://localhost/ | grep "opencart" | wc -c)
