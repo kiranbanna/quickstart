@@ -54,15 +54,6 @@ sudo php /var/www/html/opencart/install/cli_install.php install --db_hostname $s
 sleep 10
 sudo sed -e 's|/html|/html/opencart|' -i /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf
 sudo service apache2 restart
-
-opencartup=0
-count=0
-while [ $opencartup eq 0 ]
-do
-   sleep 5
-   sudo opencartup=$(curl http://localhost/ | grep "opencart" | wc -c)
-   sudo echo "Loop#$count\n" >> temp1.txt
-done
-echo $opencartup >> /home/ubuntu/temp1.txt
+sleep 120
 sudo rm -dfr /var/www/html/opencart/install
 echo "Restarted Apache."
