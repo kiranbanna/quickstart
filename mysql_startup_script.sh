@@ -32,8 +32,8 @@ apt-get -y install libdb-dev libexpat1-dev automake checkinstall unzip elinks
 name=$1
 key=$2
 
-echo mysql-server mysql-server/root_password password ${key} | debconf-set-selections  
-echo mysql-server mysql-server/root_password_again password ${key} | debconf-set-selections 
+echo mysql-server mysql-server/root_password password $key | debconf-set-selections  
+echo mysql-server mysql-server/root_password_again password $key | debconf-set-selections 
 
 apt-get -y install mysql-server
 apt-get -y install libmysqld-dev libdb-dev
@@ -41,5 +41,5 @@ apt-get -y install libmysqld-dev libdb-dev
 ipaddr=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
 sed 's%127.0.0.1%'$ipaddr'%' -i /etc/mysql/my.cnf 
 service mysql restart
-mysql -u root -p${key} -Bse "CREATE DATABASE opencart;CREATE USER '${name}'@'%' IDENTIFIED BY '${key}';GRANT ALL ON opencart.* TO '${name}'@'%';flush privileges;"
+mysql -u root -p${key} -Bse "CREATE DATABASE opencart;CREATE USER '"$name"'@'%' IDENTIFIED BY '"$key"';GRANT ALL ON opencart.* TO '"$name"'@'%';flush privileges;"
 echo "This MySQL Server is now ready to host OpenCart!"
