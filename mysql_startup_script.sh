@@ -41,5 +41,5 @@ apt-get -y install libmysqld-dev libdb-dev
 ipaddr=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
 sed 's%127.0.0.1%'$ipaddr'%' -i /etc/mysql/my.cnf 
 service mysql restart
-mysql -u root -p${key} -Bse "CREATE DATABASE opencart;CREATE USER '"$name"'@'%' IDENTIFIED BY '"$key"';GRANT ALL ON opencart.* TO '"$name"'@'%';flush privileges;"
+mysql -u root -p${key} -Bse "CREATE DATABASE opencart;CREATE USER '"$name"'@'%' IDENTIFIED BY '$key';GRANT ALL ON opencart.* TO '$name'@'%';flush privileges;"
 echo "This MySQL Server is now ready to host OpenCart!"
