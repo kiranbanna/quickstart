@@ -40,8 +40,7 @@ sudo echo "Moved config files."
 
 echo "SQL server is now alive."
 
-selfip=$1
-sqlserver=$2
+sqlserver=$1
 echo "Grabbed the IP address ($sqlserver) of the SQL Server."
 
 # Try to install OpenCart via command line.
