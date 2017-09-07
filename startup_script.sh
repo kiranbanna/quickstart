@@ -41,11 +41,12 @@ sudo echo "Moved config files."
 echo "SQL server is now alive."
 
 sqlserver=$1
+url=$2
 echo "Grabbed the IP address ($sqlserver) of the SQL Server."
 
 # Try to install OpenCart via command line.
 i2=0
-sudo php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password "anna" --db_database "opencart" --db_driver mysqli --db_port 3306 --username "opencart" --password 'anna' --email "anna@f5.com" --http_server "http://f5.aws.quickstart.com/" || i2=$[$i2+1]
+sudo php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password "anna" --db_database "opencart" --db_driver mysqli --db_port 3306 --username "opencart" --password 'anna' --email "anna@f5.com" --http_server "$2" || i2=$[$i2+1]
 
 # We succeded because we were the first!
 # Everyone else will fail, so we need to push our config to the others and restart their apache2 server.
