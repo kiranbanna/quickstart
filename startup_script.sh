@@ -42,18 +42,18 @@ echo "SQL server is now alive."
 
 sqlserver=$1
 url=$2
-username=$3
-password=$4
+name=$3
+key=$4
 
 echo "Grabbed the following data:\n"
 echo "SQL Server IP Address     =  $sqlserver \n" 
 echo "WebServer URL             =  $url \n"
-echo "Database Server user name =  $username \n"
-echo "Database Server password  =  $password \n"
+echo "Database Server user name =  $name \n"
+echo "Database Server password  =  $key \n"
 
 # Try to install OpenCart via command line.
 i2=0
-php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "opencart" --db_password "anna" --db_database "opencart" --db_driver mysqli --db_port 3306 --username "opencart" --password 'anna' --email "anna@f5.com" --http_server $url || i2=$[$i2+1]
+php /var/www/html/opencart/install/cli_install.php install --db_hostname $sqlserver --db_username "$name" --db_password "$key" --db_database "opencart" --db_driver mysqli --db_port 3306 --username "$name" --password '"$key"' --email "${name}@f5.com" --http_server $url || i2=$[$i2+1]
 
 # We succeded because we were the first!
 # Everyone else will fail, so we need to push our config to the others and restart their apache2 server.
